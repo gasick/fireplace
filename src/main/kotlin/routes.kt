@@ -1,6 +1,8 @@
-package __PACKAGE__
+package dev.alpas.fireplace
 
-import __PACKAGE__.controllers.WelcomeController
+import dev.alpas.auth.authRoutes
+import dev.alpas.fireplace.controllers.ProjectController
+import dev.alpas.fireplace.controllers.WelcomeController
 import dev.alpas.routing.RouteGroup
 import dev.alpas.routing.Router
 
@@ -8,6 +10,7 @@ import dev.alpas.routing.Router
 fun Router.addRoutes() = apply {
     group {
         webRoutesGroup()
+        authRoutes()
     }.middlewareGroup("web")
 
     apiRoutes()
@@ -16,6 +19,8 @@ fun Router.addRoutes() = apply {
 private fun RouteGroup.webRoutesGroup() {
     get("/", WelcomeController::index).name("welcome")
     // register more web routes here
+    get("/projects", ProjectController::index).name("projects.list")
+    get("/projects/create", ProjectController::create).name("projects.create")
 }
 
 private fun Router.apiRoutes() {
