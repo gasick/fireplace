@@ -14645,8 +14645,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/gasick/Documents/Repos/kt/fireplace/src/main/resources/js/app.js */"./src/main/resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/gasick/Documents/Repos/kt/fireplace/src/main/resources/css/app.less */"./src/main/resources/css/app.less");
+__webpack_require__(/*! C:\repos\kotlin\fireplace\src\main\resources\js\app.js */"./src/main/resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\repos\kotlin\fireplace\src\main\resources\css\app.less */"./src/main/resources/css/app.less");
 
 
 /***/ })

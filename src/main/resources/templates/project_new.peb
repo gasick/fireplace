@@ -3,7 +3,7 @@
 <div class="h-screen mt-10 pt-10">
     <div class="w-full max-w-xl mx-auto">
         <form class="bg-white p-8 mx-auto bg-white shadow-md rounded mb-4 {{ errors.isEmpty() ? '' : 'border-red-500 border' }}"
-              method="POST" action="">
+              method="POST" action="{{ route("projects.store") }}">
         {% csrf %}
             <div class="text-gray-600">
                 <h2 class="text-xl text-center uppercase py-4">Create a Project</h2>

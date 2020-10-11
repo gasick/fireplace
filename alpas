@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-
 APP_NAME="fireplace"
-
 cecholn() {
   RED="\033[0;31m"
   GREEN='\033[0;32m'

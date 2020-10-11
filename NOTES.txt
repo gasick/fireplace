@@ -2,4 +2,5 @@ docker-compose exec mysql mysql -u root -psecret fireplace -e 'SELECT * FROM mig
 docker-compose exec mysql mysql -u root -psecret fireplace -e 'SELECT * FROM migrations'
 docker-compose exec mysql mysql -u root -psecret fireplace -e 'SHOW TABLES'
 docker-compose exec mysql mysql -u root -psecret fireplace -e 'SHOW COLUMNS FROM projects'
+docker-compose exec mysql mysql -u root -psecret
 docker-compose exec mysql mysql -u root -p fireplace

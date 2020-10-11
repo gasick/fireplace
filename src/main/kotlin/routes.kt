@@ -19,8 +19,9 @@ fun Router.addRoutes() = apply {
 private fun RouteGroup.webRoutesGroup() {
     get("/", WelcomeController::index).name("welcome")
     // register more web routes here
-    get("/projects", ProjectController::index).name("projects.list")
-    get("/projects/create", ProjectController::create).name("projects.create")
+    get("/projects", ProjectController::index).name("projects.list").mustBeAuthenticated()
+    get("/projects/create", ProjectController::create).name("projects.create").mustBeAuthenticated()
+    post("/projects", ProjectController::store).name("projects.store").mustBeAuthenticated()
 }
 
 private fun Router.apiRoutes() {
