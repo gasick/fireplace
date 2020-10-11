@@ -18,12 +18,13 @@ class ProjectController : Controller() {
 
     fun store(call: HttpCall){
 //todo: проверка входных данных
-        Projects.create() {
+        val project = Projects.create() {
             it.title to call.param("title")
             it.description to call.param("description")
             it.ownerId to call.user.id
         }
 
+        flash("success", "Successfully added project '${project.title}")
         call.redirect().toRouteNamed("projects.list")
     }
 }
