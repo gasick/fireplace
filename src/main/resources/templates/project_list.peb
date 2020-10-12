@@ -32,6 +32,16 @@
                 </div>
                 <p class="text-gray-700 text-base flex-1"> {{ project.description }} </p>
 
+                <div class="py-4 flex">
+                    <form action="{{ route('projects.delete', {"idi": project.idi}) }}" method="POST">
+                    {% csrf %}
+                        <input type="hidden" name="_method" value="delete"/>
+                        <button class="hover:text-red-800 text-red-600 text-sm uppercase hover-target">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+
             </div>
         </a>
     {% endfor %}
