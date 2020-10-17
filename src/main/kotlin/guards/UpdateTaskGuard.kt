@@ -16,7 +16,7 @@ class UpdateTaskGuard : CreateTasksGuard() {
             it.body to call.jsonBody?.get("body")
             val completed = call.jsonBody?.get("completed")
             if (completed != null) {
-                it.completed to completedgit
+                it.completed to completed
             }
             where { it.id eq id }
         }
