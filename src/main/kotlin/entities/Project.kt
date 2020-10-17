@@ -1,9 +1,10 @@
 package dev.alpas.fireplace.entities
 
 import dev.alpas.ozone.*
-import me.liuwj.ktorm.schema.long
-import me.liuwj.ktorm.schema.text
-import me.liuwj.ktorm.schema.timestamp
+import me.liuwj.ktorm.dsl.eq
+import me.liuwj.ktorm.entity.Entity
+import me.liuwj.ktorm.entity.findList
+import me.liuwj.ktorm.schema.*
 import java.time.Instant
 
 interface Project : OzoneEntity<Project> {
@@ -12,6 +13,7 @@ interface Project : OzoneEntity<Project> {
     val description: String
     val notes: String?
     val owner: User
+    val tasks get() = hasManyIdi(Tasks)
     var createdAt: Instant?
     var updatedAt: Instant?
 
@@ -27,4 +29,21 @@ object Projects : OzoneTable<Project>("projects") {
 
     val createdAt by timestamp("created_at").useCurrent().bindTo { it.createdAt }
     val updatedAt by timestamp("updated_at").useCurrent().bindTo { it.updatedAt }
+}
+
+
+
+
+inline fun <reified E : Entity<E>, reified T : BaseTable<E>> Entity<*>.hasManyIdi(
+        table: T,
+        foreignKey: String? = null,
+        localKey: String? = null,
+        cacheKey: String? = null
+): List<E> {
+    val name = cacheKey ?: table.hasManyCacheKey
+    return this[name] as? List<E> ?: table.findList {
+        val actualForeignKey = foreignKey ?: this.defaultForeignKey
+        val foreignKeyValue = it[actualForeignKey] as Column<Any>
+        foreignKeyValue eq this[localKey ?: "idi"]!!
+    }.also { this[name] = it }
 }

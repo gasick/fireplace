@@ -2,6 +2,7 @@ package dev.alpas.fireplace
 
 import dev.alpas.auth.authRoutes
 import dev.alpas.fireplace.controllers.ProjectController
+import dev.alpas.fireplace.controllers.TaskController
 import dev.alpas.fireplace.controllers.WelcomeController
 import dev.alpas.routing.RouteGroup
 import dev.alpas.routing.Router
@@ -21,6 +22,7 @@ private fun RouteGroup.webRoutesGroup() {
     // register more web routes here
     group("/projects"){
         addProjectRoutes()
+        addTaskRoutes()
     }.name("projects").mustBeAuthenticated()
 }
 
@@ -33,6 +35,11 @@ private fun RouteGroup.addProjectRoutes(){
     get("/<idi>", ProjectController::show ).name("show")
 }
 
+private fun RouteGroup.addTaskRoutes() {
+    group("<project>/tasks"){
+        post("/", TaskController::store).name("create")
+    }.name("tasks")
+}
 private fun Router.apiRoutes() {
     // register API routes here
 }

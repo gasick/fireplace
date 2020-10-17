@@ -1,8 +1,6 @@
 package dev.alpas.fireplace.controllers
 
-import dev.alpas.fireplace.entities.Project
 import dev.alpas.fireplace.entities.Projects
-import dev.alpas.fireplace.entities.Projects.idi
 import dev.alpas.fireplace.entities.User
 import dev.alpas.fireplace.guards.CreateProjectGuard
 import dev.alpas.ozone.create
