@@ -1922,7 +1922,7 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Form */ "./src/main/resources/js/Form.js");
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../form */ "./src/main/resources/js/form.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -1970,7 +1970,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      form: new _Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
+      form: new _form__WEBPACK_IMPORTED_MODULE_1__["default"]({
         body: '',
         completed: false
       }),
@@ -16148,98 +16148,6 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./src/main/resources/js/Form.js":
-/*!***************************************!*\
-  !*** ./src/main/resources/js/Form.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Form =
-/*#__PURE__*/
-function () {
-  function Form(data) {
-    _classCallCheck(this, Form);
-
-    this.originalData = JSON.parse(JSON.stringify(data));
-    Object.assign(this, data);
-    this.errors = {};
-    this.submitted = false;
-    this.isWorking = false;
-  }
-
-  _createClass(Form, [{
-    key: "data",
-    value: function data() {
-      var _this = this;
-
-      return Object.keys(this.originalData).reduce(function (data, attribute) {
-        data[attribute] = _this[attribute];
-        return data;
-      }, {});
-    }
-  }, {
-    key: "post",
-    value: function post(endpoint) {
-      return this.submit(endpoint);
-    }
-  }, {
-    key: "patch",
-    value: function patch(endpoint) {
-      return this.submit(endpoint, 'patch');
-    }
-  }, {
-    key: "delete",
-    value: function _delete(endpoint) {
-      return this.submit(endpoint, 'delete');
-    }
-  }, {
-    key: "submit",
-    value: function submit(endpoint) {
-      var _this2 = this;
-
-      var requestType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'post';
-      this.isWorking = true;
-      return axios[requestType](endpoint, this.data())["catch"](this.onFail.bind(this)).then(this.onSuccess.bind(this))["finally"](function () {
-        return _this2.isWorking = false;
-      });
-    }
-  }, {
-    key: "onSuccess",
-    value: function onSuccess(response) {
-      this.submitted = true;
-      this.errors = {};
-      return response;
-    }
-  }, {
-    key: "onFail",
-    value: function onFail(error) {
-      this.errors = error.response.data.errors;
-      this.submitted = false;
-      throw error;
-    }
-  }, {
-    key: "reset",
-    value: function reset() {
-      Object.assign(this, this.originalData);
-    }
-  }]);
-
-  return Form;
-}();
-
-/* harmony default export */ __webpack_exports__["default"] = (Form);
-
-/***/ }),
-
 /***/ "./src/main/resources/js/app.js":
 /*!**************************************!*\
   !*** ./src/main/resources/js/app.js ***!
@@ -16421,6 +16329,98 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/main/resources/js/form.js":
+/*!***************************************!*\
+  !*** ./src/main/resources/js/form.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Form =
+/*#__PURE__*/
+function () {
+  function Form(data) {
+    _classCallCheck(this, Form);
+
+    this.originalData = JSON.parse(JSON.stringify(data));
+    Object.assign(this, data);
+    this.errors = {};
+    this.submitted = false;
+    this.isWorking = false;
+  }
+
+  _createClass(Form, [{
+    key: "data",
+    value: function data() {
+      var _this = this;
+
+      return Object.keys(this.originalData).reduce(function (data, attribute) {
+        data[attribute] = _this[attribute];
+        return data;
+      }, {});
+    }
+  }, {
+    key: "post",
+    value: function post(endpoint) {
+      return this.submit(endpoint);
+    }
+  }, {
+    key: "patch",
+    value: function patch(endpoint) {
+      return this.submit(endpoint, 'patch');
+    }
+  }, {
+    key: "delete",
+    value: function _delete(endpoint) {
+      return this.submit(endpoint, 'delete');
+    }
+  }, {
+    key: "submit",
+    value: function submit(endpoint) {
+      var _this2 = this;
+
+      var requestType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'post';
+      this.isWorking = true;
+      return axios[requestType](endpoint, this.data())["catch"](this.onFail.bind(this)).then(this.onSuccess.bind(this))["finally"](function () {
+        return _this2.isWorking = false;
+      });
+    }
+  }, {
+    key: "onSuccess",
+    value: function onSuccess(response) {
+      this.submitted = true;
+      this.errors = {};
+      return response;
+    }
+  }, {
+    key: "onFail",
+    value: function onFail(error) {
+      this.errors = error.response.data.errors;
+      this.submitted = false;
+      throw error;
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      Object.assign(this, this.originalData);
+    }
+  }]);
+
+  return Form;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Form);
+
+/***/ }),
+
 /***/ 0:
 /*!******************************************************************************!*\
   !*** multi ./src/main/resources/js/app.js ./src/main/resources/css/app.less ***!
@@ -16428,8 +16428,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\repos\kotlin\fireplace\src\main\resources\js\app.js */"./src/main/resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\repos\kotlin\fireplace\src\main\resources\css\app.less */"./src/main/resources/css/app.less");
+__webpack_require__(/*! /home/gasick/Documents/Repos/kt/fireplace/src/main/resources/js/app.js */"./src/main/resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/gasick/Documents/Repos/kt/fireplace/src/main/resources/css/app.less */"./src/main/resources/css/app.less");
 
 
 /***/ })

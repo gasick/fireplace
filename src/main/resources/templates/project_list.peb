@@ -24,7 +24,7 @@
         </div>
     {% else %}
     {% for project in projects %}
-        <a href="{{ route('projects.show', {"idi": project.idi}) }}"
+        <a href="{{ route('projects.show', {"id": project.id}) }}"
            class="max-w-md rounded overflow-hidden shadow-lg m-2 w-1/3 hover-controller bg-white hover:bg-gray-100">
             <div class="p-10 h-full flex flex-col">
                 <div class="inline-flex w-full">
@@ -33,7 +33,7 @@
                 <p class="text-gray-700 text-base flex-1"> {{ project.description }} </p>
 
                 <div class="py-4 flex">
-                    <form action="{{ route('projects.delete', {"idi": project.idi}) }}" method="POST">
+                    <form action="{{ route('projects.delete', {"idi": project.id}) }}" method="POST">
                     {% csrf %}
                         <input type="hidden" name="_method" value="delete"/>
                         <button class="hover:text-red-800 text-red-600 text-sm uppercase hover-target">

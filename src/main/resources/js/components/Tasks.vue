@@ -23,7 +23,8 @@
 
 
 <script>
-    import Form from "../Form";
+    import Form from "../form";
+
     export default {
         props: {
             initialTasks: {type: Array, required: false, default: () => []},
@@ -60,18 +61,23 @@
         li .destroy::after {
             content: '×';
         }
+
         li:hover .destroy {
             display: block;
         }
+
         li.completed label {
         @apply text-gray-500 line-through;
         }
+
         li .edit {
             display: none;
         }
+
         li.editing .view {
             display: none;
         }
+
         li.editing .edit {
             display: block;
             margin: 0 0 0 43px;

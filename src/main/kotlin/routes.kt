@@ -32,7 +32,7 @@ private fun RouteGroup.addProjectRoutes(){
     get("/create", ProjectController::create).name("create")
     post("/", ProjectController::store).name("store")
     delete("/", ProjectController::delete).name("delete")
-    get("/<idi>", ProjectController::show ).name("show")
+    get("/<id>", ProjectController::show ).name("show")
 }
 
 private fun RouteGroup.addTaskRoutes() {

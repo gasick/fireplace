@@ -10,8 +10,8 @@ services:
     env_file:
           - .env
     volumes:
-      - mysql:/var/lib/mysql
-      - dumps:/code/dumps
+      - ./mysql:/var/lib/mysql
+      - ./dumps:/code/dumps
 
 volumes:
   mysql:

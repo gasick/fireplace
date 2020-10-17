@@ -39,16 +39,16 @@ class ProjectController : Controller() {
         //flash message tot he user
         //redirect back to where we came from
 
-        val idi = call.longParam("idi").orAbort()
-        Projects.delete { it.idi eq idi }
+        val id = call.longParam("id").orAbort()
+        Projects.delete { it.id eq id }
         flash("success", "Successfully deleted a project ")
         call.redirect().back()
     }
 
     fun show(call: HttpCall){
         //get
-        val idi = call.longParam("idi").orAbort()
-        val project = Projects.findOrFail(idi)
+        val id = call.longParam("id").orAbort()
+        val project = Projects.findOrFail(id)
         call.render("project_show", mapOf("project" to project))
     }
 }

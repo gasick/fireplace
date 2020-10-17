@@ -8,12 +8,12 @@ import me.liuwj.ktorm.schema.*
 import java.time.Instant
 
 interface Project : OzoneEntity<Project> {
-    var idi: Long
+    var id: Long
     var title: String?
     val description: String
     val notes: String?
     val owner: User
-    val tasks get() = hasManyIdi(Tasks)
+    val tasks get() = hasMany(Tasks)
     var createdAt: Instant?
     var updatedAt: Instant?
 
@@ -21,7 +21,7 @@ interface Project : OzoneEntity<Project> {
 }
 
 object Projects : OzoneTable<Project>("projects") {
-    val idi by bigIncrements("idi").bindTo { it.idi }
+    val id by bigIncrements()
     val title by mediumText("title").bindTo { it.title}
     val description by text("description").bindTo { it.description}
     val notes by text("notes").nullable().bindTo { it.notes}
@@ -34,16 +34,3 @@ object Projects : OzoneTable<Project>("projects") {
 
 
 
-inline fun <reified E : Entity<E>, reified T : BaseTable<E>> Entity<*>.hasManyIdi(
-        table: T,
-        foreignKey: String? = null,
-        localKey: String? = null,
-        cacheKey: String? = null
-): List<E> {
-    val name = cacheKey ?: table.hasManyCacheKey
-    return this[name] as? List<E> ?: table.findList {
-        val actualForeignKey = foreignKey ?: this.defaultForeignKey
-        val foreignKeyValue = it[actualForeignKey] as Column<Any>
-        foreignKeyValue eq this[localKey ?: "idi"]!!
-    }.also { this[name] = it }
-}
