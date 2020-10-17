@@ -2037,11 +2037,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return this.form["delete"]("/projects/".concat(this.projectId, "/tasks/").concat(task.id));
 
               case 2:
-                this.tasks = this.tasks.filter(function (t) {
-                  return t.id !== task.id;
-                });
-
-              case 3:
               case "end":
                 return _context2.stop();
             }

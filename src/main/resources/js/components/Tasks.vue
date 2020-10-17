@@ -6,6 +6,8 @@
                     <label class="text-lg font-light mx-6 flex-1 py-2 text-gray-700">
                         {{ task.body }}
                     </label>
+                    <button class="destroy text-red-500 hover:text-red-700 hidden w-10 text-2xl"
+                            @click="removeTask(task)"/>
 
                 </div>
             </li>
@@ -52,6 +54,11 @@
                     this.$refs.newTaskInput.focus()
                 })
             },
+            async removeTask(task) {
+                await this.form.delete(`/projects/${this.projectId}/tasks/${task.id}`)
+                this.tasks = this.tasks.filter(t => t.id !== task.id)
+
+            }
         }
     }
 </script>

@@ -17,6 +17,6 @@
                    :project-id="{{ project.id }}" class="mt-4"></tasks>
         </div>
 
-    </div>
+    </divt>
 </div>
 {% endblock %}
