@@ -1922,13 +1922,23 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../form */ "./src/main/resources/js/form.js");
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Form */ "./src/main/resources/js/Form.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1972,11 +1982,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      form: new _form__WEBPACK_IMPORTED_MODULE_1__["default"]({
+      form: new _Form__WEBPACK_IMPORTED_MODULE_2__["default"]({
         body: '',
         completed: false
       }),
-      tasks: this.initialTasks || []
+      tasks: this.initialTasks || [],
+      editedTask: null,
+      beforeEditCache: null
     };
   },
   directives: {
@@ -2025,15 +2037,79 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return createTask;
     }(),
-    removeTask: function () {
-      var _removeTask = _asyncToGenerator(
+    editTask: function editTask(task) {
+      if (task.completed) {
+        return;
+      }
+
+      this.beforeEditCache = task.body;
+      this.editedTask = task;
+    },
+    doneEdit: function () {
+      var _doneEdit = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(task) {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
+                if (this.editedTask) {
+                  _context2.next = 2;
+                  break;
+                }
+
+                return _context2.abrupt("return");
+
+              case 2:
+                this.editedTask = null;
+                this.form.body = task.body = task.body.trim();
+
+                if (task.body) {
+                  _context2.next = 9;
+                  break;
+                }
+
+                _context2.next = 7;
+                return this.removeTask(task);
+
+              case 7:
+                _context2.next = 12;
+                break;
+
+              case 9:
+                _context2.next = 11;
+                return this.form.patch("/projects/".concat(this.projectId, "/tasks/").concat(task.id));
+
+              case 11:
+                this.form.reset();
+
+              case 12:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function doneEdit(_x) {
+        return _doneEdit.apply(this, arguments);
+      }
+
+      return doneEdit;
+    }(),
+    cancelEdit: function cancelEdit(task) {
+      this.editedTask = null;
+      task.body = this.beforeEditCache;
+    },
+    removeTask: function () {
+      var _removeTask = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(task) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
                 return this.form["delete"]("/projects/".concat(this.projectId, "/tasks/").concat(task.id));
 
               case 2:
@@ -2043,17 +2119,47 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
-      function removeTask(_x) {
+      function removeTask(_x2) {
         return _removeTask.apply(this, arguments);
       }
 
       return removeTask;
+    }(),
+    updateTaskStatus: function () {
+      var _updateTaskStatus = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(task) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                this.form.body = task.body = task.body.trim();
+                this.form.completed = task.completed;
+                _context4.next = 4;
+                return this.form.patch("/projects/".concat(this.projectId, "/tasks/").concat(task.id));
+
+              case 4:
+                this.form.reset();
+
+              case 5:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function updateTaskStatus(_x3) {
+        return _updateTaskStatus.apply(this, arguments);
+      }
+
+      return updateTaskStatus;
     }()
   }
 });
@@ -3930,33 +4036,152 @@ var render = function() {
       "ul",
       { staticClass: "task-list max-w-4xl" },
       _vm._l(_vm.tasks, function(task) {
-        return _c("li", { key: task.id, staticClass: "py-1 list-disc" }, [
-          _c("div", { staticClass: "view flex items-center" }, [
-            _c(
-              "label",
-              {
-                staticClass: "text-lg font-light mx-6 flex-1 py-2 text-gray-700"
-              },
-              [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(task.body) +
-                    "\n                "
-                )
-              ]
-            ),
+        return _c(
+          "li",
+          {
+            key: task.id,
+            staticClass: "py-1",
+            class: {
+              completed: task.completed,
+              editing: task === _vm.editedTask
+            }
+          },
+          [
+            _c("div", { staticClass: "view flex items-center" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: task.completed,
+                    expression: "task.completed"
+                  }
+                ],
+                staticClass: "form-checkbox text-green-500 h-6 w-6",
+                attrs: { type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(task.completed)
+                    ? _vm._i(task.completed, null) > -1
+                    : task.completed
+                },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$a = task.completed,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 &&
+                            _vm.$set(task, "completed", $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            _vm.$set(
+                              task,
+                              "completed",
+                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                            )
+                        }
+                      } else {
+                        _vm.$set(task, "completed", $$c)
+                      }
+                    },
+                    function($event) {
+                      return _vm.updateTaskStatus(task)
+                    }
+                  ]
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass:
+                    "text-lg font-light mx-6 flex-1 py-2 text-gray-700",
+                  on: {
+                    dblclick: function($event) {
+                      return _vm.editTask(task)
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(task.body) +
+                      "\n                "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("button", {
+                staticClass:
+                  "destroy text-red-500 hover:text-red-700 hidden w-10 text-2xl",
+                on: {
+                  click: function($event) {
+                    return _vm.removeTask(task)
+                  }
+                }
+              })
+            ]),
             _vm._v(" "),
-            _c("button", {
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: task.body,
+                  expression: "task.body"
+                },
+                {
+                  name: "task-focus",
+                  rawName: "v-task-focus",
+                  value: task === _vm.editedTask,
+                  expression: "task === editedTask"
+                }
+              ],
               staticClass:
-                "destroy text-red-500 hover:text-red-700 hidden w-10 text-2xl",
+                "edit appearance-none bg-gray-300 border border-gray-300 border-white focus:outline-none leading-tight px-3 py-3 rounded text-gray-700 text-lg w-fulll",
+              attrs: { type: "text" },
+              domProps: { value: task.body },
               on: {
-                click: function($event) {
-                  return _vm.removeTask(task)
+                keyup: [
+                  function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.doneEdit(task)
+                  },
+                  function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "esc", 27, $event.key, [
+                        "Esc",
+                        "Escape"
+                      ])
+                    ) {
+                      return null
+                    }
+                    return _vm.cancelEdit(task)
+                  }
+                ],
+                blur: function($event) {
+                  return _vm.doneEdit(task)
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(task, "body", $event.target.value)
                 }
               }
             })
-          ])
-        ])
+          ]
+        )
       }),
       0
     ),
@@ -3965,6 +4190,7 @@ var render = function() {
       _c(
         "form",
         {
+          class: { hidden: _vm.editedTask !== null },
           on: {
             submit: function($event) {
               $event.preventDefault()
@@ -16147,6 +16373,98 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./src/main/resources/js/Form.js":
+/*!***************************************!*\
+  !*** ./src/main/resources/js/Form.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Form =
+/*#__PURE__*/
+function () {
+  function Form(data) {
+    _classCallCheck(this, Form);
+
+    this.originalData = JSON.parse(JSON.stringify(data));
+    Object.assign(this, data);
+    this.errors = {};
+    this.submitted = false;
+    this.isWorking = false;
+  }
+
+  _createClass(Form, [{
+    key: "data",
+    value: function data() {
+      var _this = this;
+
+      return Object.keys(this.originalData).reduce(function (data, attribute) {
+        data[attribute] = _this[attribute];
+        return data;
+      }, {});
+    }
+  }, {
+    key: "post",
+    value: function post(endpoint) {
+      return this.submit(endpoint);
+    }
+  }, {
+    key: "patch",
+    value: function patch(endpoint) {
+      return this.submit(endpoint, 'patch');
+    }
+  }, {
+    key: "delete",
+    value: function _delete(endpoint) {
+      return this.submit(endpoint, 'delete');
+    }
+  }, {
+    key: "submit",
+    value: function submit(endpoint) {
+      var _this2 = this;
+
+      var requestType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'post';
+      this.isWorking = true;
+      return axios[requestType](endpoint, this.data())["catch"](this.onFail.bind(this)).then(this.onSuccess.bind(this))["finally"](function () {
+        return _this2.isWorking = false;
+      });
+    }
+  }, {
+    key: "onSuccess",
+    value: function onSuccess(response) {
+      this.submitted = true;
+      this.errors = {};
+      return response;
+    }
+  }, {
+    key: "onFail",
+    value: function onFail(error) {
+      this.errors = error.response.data.errors;
+      this.submitted = false;
+      throw error;
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      Object.assign(this, this.originalData);
+    }
+  }]);
+
+  return Form;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Form);
+
+/***/ }),
+
 /***/ "./src/main/resources/js/app.js":
 /*!**************************************!*\
   !*** ./src/main/resources/js/app.js ***!
@@ -16255,98 +16573,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tasks_vue_vue_type_template_id_356b5294_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
-
-/***/ }),
-
-/***/ "./src/main/resources/js/form.js":
-/*!***************************************!*\
-  !*** ./src/main/resources/js/form.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Form =
-/*#__PURE__*/
-function () {
-  function Form(data) {
-    _classCallCheck(this, Form);
-
-    this.originalData = JSON.parse(JSON.stringify(data));
-    Object.assign(this, data);
-    this.errors = {};
-    this.submitted = false;
-    this.isWorking = false;
-  }
-
-  _createClass(Form, [{
-    key: "data",
-    value: function data() {
-      var _this = this;
-
-      return Object.keys(this.originalData).reduce(function (data, attribute) {
-        data[attribute] = _this[attribute];
-        return data;
-      }, {});
-    }
-  }, {
-    key: "post",
-    value: function post(endpoint) {
-      return this.submit(endpoint);
-    }
-  }, {
-    key: "patch",
-    value: function patch(endpoint) {
-      return this.submit(endpoint, 'patch');
-    }
-  }, {
-    key: "delete",
-    value: function _delete(endpoint) {
-      return this.submit(endpoint, 'delete');
-    }
-  }, {
-    key: "submit",
-    value: function submit(endpoint) {
-      var _this2 = this;
-
-      var requestType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'post';
-      this.isWorking = true;
-      return axios[requestType](endpoint, this.data())["catch"](this.onFail.bind(this)).then(this.onSuccess.bind(this))["finally"](function () {
-        return _this2.isWorking = false;
-      });
-    }
-  }, {
-    key: "onSuccess",
-    value: function onSuccess(response) {
-      this.submitted = true;
-      this.errors = {};
-      return response;
-    }
-  }, {
-    key: "onFail",
-    value: function onFail(error) {
-      this.errors = error.response.data.errors;
-      this.submitted = false;
-      throw error;
-    }
-  }, {
-    key: "reset",
-    value: function reset() {
-      Object.assign(this, this.originalData);
-    }
-  }]);
-
-  return Form;
-}();
-
-/* harmony default export */ __webpack_exports__["default"] = (Form);
 
 /***/ }),
 
