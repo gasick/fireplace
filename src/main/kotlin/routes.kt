@@ -20,6 +20,9 @@ fun Router.addRoutes() = apply {
 
 private fun RouteGroup.webRoutesGroup() {
     get("/", WelcomeController::index).name("welcome")
+    get("/home"){
+        redirect().toRouteNamed("projects.list")
+    }
     // register more web routes here
     group("/projects"){
         addProjectRoutes()

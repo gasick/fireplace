@@ -4,3 +4,6 @@ docker-compose exec mysql mysql -u root -psecret fireplace -e 'SHOW TABLES'
 docker-compose exec mysql mysql -u root -psecret fireplace -e 'SHOW COLUMNS FROM projects'
 docker-compose exec mysql mysql -u root -psecret
 docker-compose exec mysql mysql -u root -p fireplace
+grant all privileges on fireplaceTest.* to 'looser'@'localhost' identified by 'secret';
+CREATE USER user@localhost IDENTIFIED BY 'user';
+FLUSH PRIVILEGES;
