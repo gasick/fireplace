@@ -10,6 +10,7 @@ import me.liuwj.ktorm.entity.findList
 interface User : BaseUser<User> {
     // https://alpas.dev/docs/email-verification
     val projects get() = Projects.findList{it.ownerId eq id}
+    val projectMembership get() = ProjectMemberships.findList {it.userId eq id}.map{it.project}
 
     override val mustVerifyEmail get() = false
 
