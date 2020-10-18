@@ -15,6 +15,7 @@ interface Project : OzoneEntity<Project> {
     val owner: User
     val tasks get() = hasMany(Tasks)
     val activities get() = hasMany(Activities)
+    val members get() = hasMany(ProjectMemberships).map{it.member}
     var createdAt: Instant?
     var updatedAt: Instant?
 
