@@ -38,7 +38,7 @@ class ProjectController : Controller() {
         call.redirect().toRouteNamed("projects.list")
     }
 
-    private fun logCreateProjectActivity(project: Project, mapOf: Map<String, Any?>) {
+    private fun logCreateProjectActivity(project: Project, payload: Map<String, Any?>) {
         val now = call.nowInCurrentTimezone().toInstant()
         val user = caller<User>()
         Activities.insert{
