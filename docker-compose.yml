@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3'
 
 services:
 
@@ -7,11 +7,17 @@ services:
     restart: always
     ports:
       - 3306:3306
-    env_file:
-          - .env
+    environment:
+      - MYSQL_DATABASE=fireplace
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_RANDOM_ROOT_PASSWORD=secret
     volumes:
-      - ./mysql:/var/lib/mysql
-      - ./dumps:/code/dumps
+      - mysql:/var/lib/mysql:rw
+      - dumps:/code/dumps:rw
 
 volumes:
   mysql:

@@ -1922,7 +1922,7 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Form */ "./src/main/resources/js/Form.js");
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Form */ "./src/main/resources/js/Form.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -1982,7 +1982,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      form: new _Form__WEBPACK_IMPORTED_MODULE_2__["default"]({
+      form: new _Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
         body: '',
         completed: false
       }),
@@ -16583,8 +16583,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/gasick/Documents/Repos/kt/fireplace/src/main/resources/js/app.js */"./src/main/resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/gasick/Documents/Repos/kt/fireplace/src/main/resources/css/app.less */"./src/main/resources/css/app.less");
+__webpack_require__(/*! /home/gasick/Repos/kotlin/fireplace/src/main/resources/js/app.js */"./src/main/resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/gasick/Repos/kotlin/fireplace/src/main/resources/css/app.less */"./src/main/resources/css/app.less");
 
 
 /***/ })
